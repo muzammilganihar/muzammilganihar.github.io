@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Technology Herald | Syed Mohammad Muzammil Ganihar</title>
+    <style>
+        /* --- Google Fonts for Classic Newspaper Look --- */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Playfair+Display:wght@700;900&family=UnifrakturCook:wght@700&display=swap');
+
+        /* --- Theme Color Variables --- */
+        :root {
+            --bg-color-light: #e9e6e0;
+            --paper-color-light: #faf8f2;
+            --text-color-light: #1a1a1a;
+            --headline-color-light: #000;
+            --border-color-light: #ccc;
+            --byline-color-light: #555;
+            --separator-color-light: #ddd;
+        }
+
+        .dark-mode {
+            --bg-color-light: #1a1a1a;
+            --paper-color-light: #2c2c2c;
+            --text-color-light: #e0e0e0;
+            --headline-color-light: #ffffff;
+            --border-color-light: #444;
+            --byline-color-light: #aaa;
+            --separator-color-light: #444;
+        }
+
+        .night-mode {
+            --bg-color-light: #2c251e;
+            --paper-color-light: #4c3f30;
+            --text-color-light: #c2b5a3;
+            --headline-color-light: #e0d6c7;
+            --border-color-light: #6b5a47;
+            --byline-color-light: #a39582;
+            --separator-color-light: #6b5a47;
+        }
+
+        /* --- General Page & Container Styling --- */
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            padding: 20px;
+            font-size: 13px;
+            line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .newspaper-container {
+            max-width: 1200px;
+            margin: auto;
+            background-color: var(--paper-color-light);
+            border: 1px solid var(--border-color-light);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            padding: 25px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* --- Masthead (The Newspaper's Title) --- */
+        .masthead {
+            text-align: center;
+            border-bottom: 6px double var(--text-color-light);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .masthead h1 {
+            font-family: 'UnifrakturCook', cursive;
+            font-weight: 700;
+            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            margin: 0;
+            letter-spacing: 1px;
+            color: var(--headline-color-light);
+            transition: color 0.3s;
+        }
+
+        /* --- Dateline and Sub-header --- */
+        .dateline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--text-color-light);
+            border-bottom: 1px solid var(--text-color-light);
+            padding: 8px 0;
+            margin-bottom: 20px;
+            font-size: 11px;
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+            transition: border-color 0.3s;
+        }
+
+        /* --- Theme Toggler --- */
+        .theme-toggler {
+            display: flex;
+            gap: 5px;
+        }
+        .theme-button {
+            background: none;
+            border: 1px solid var(--text-color-light);
+            color: var(--text-color-light);
+            font-family: 'Roboto', sans-serif;
+            font-size: 10px;
+            padding: 2px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .theme-button.active {
+            background-color: var(--text-color-light);
+            color: var(--paper-color-light);
+        }
+
+        /* --- Main Content Layout Grid --- */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 25px;
+        }
+        
+        .main-articles {
+            grid-column: span 8;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar {
+            grid-column: span 4;
+            border-left: 1px solid var(--separator-color-light);
+            padding-left: 20px;
+            transition: border-color 0.3s;
+        }
+
+        /* --- Article & Headline Styling --- */
+        article {
+            text-align: justify;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none; /* Remove default underline */
+        }
+
+        h2.headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            margin-bottom: 5px;
+            line-height: 1.1;
+            color: var(--headline-color-light);
+            transition: color 0.3s;
+        }
+
+        h3.sub-headline {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.6em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--separator-color-light);
+            padding-bottom: 5px;
+            font-weight: 700;
+            transition: border-color 0.3s;
+        }
+        
+        h4.project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: var(--headline-color-light);
+            transition: color 0.3s;
+        }
+
+        /* Style for linked project titles */
+        h4.project-title a {
+            transition: text-decoration 0.2s;
+        }
+        h4.project-title a:hover {
+            text-decoration: underline;
+        }
+
+        .byline {
+            font-style: italic;
+            color: var(--byline-color-light);
+            margin-bottom: 15px;
+            transition: color 0.3s;
+        }
+
+        .separator {
+            border-bottom: 1px solid var(--border-color-light);
+            margin: 20px 0;
+            transition: border-color 0.3s;
+        }
+        
+        /* --- Sidebar Specific Styling --- */
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+        
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            text-align: center;
+            border-top: 2px solid var(--text-color-light);
+            border-bottom: 2px solid var(--text-color-light);
+            padding: 5px 0;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .main-articles, .sidebar {
+                grid-column: span 1;
+            }
+            .sidebar {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 20px;
+                border-top: 1px solid var(--separator-color-light);
+                padding-top: 20px;
+            }
+            .dateline {
+                justify-content: center;
+                gap: 15px;
+            }
+        }
+
+        /* --- Footer Styling --- */
+        .page-footer {
+            border-top: 1px solid var(--border-color-light);
+            margin-top: 25px;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 10px;
+            color: var(--byline-color-light);
+            font-style: italic;
+            transition: border-color 0.3s, color 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper-container">
+
+        <header class="masthead">
+            <h1>The Technology Herald</h1>
+        </header>
+
+        <div class="dateline">
+            <span>VOL. I NO. 1 &mdash; BENGALURU, KARNATAKA</span>
+            <div class="theme-toggler">
+                <button id="light-mode" class="theme-button">Light</button>
+                <button id="dark-mode" class="theme-button">Dark</button>
+                <button id="night-mode" class="theme-button">Night</button>
+            </div>
+            <span>EST. 2025</span>
+        </div>
+
+        <div class="main-content">
+            <div class="main-articles">
+                <article>
+                    <h2 class="headline">My Journey in Artificial Intelligence: A Story of Passion and Projects</h2>
+                    <p class="byline">A Personal Chronicle by Syed Mohammad Muzammil Ganihar</p>
+                    <p class="lead-paragraph">
+                        BENGALURU—In this rapidly evolving technological landscape, my goal is to make a mark as a dedicated and skilled engineer specializing in Artificial Intelligence and Machine Learning. With a strong academic background from the Global Academy of Technology and impactful industry experience, I've developed a profound capability in solving complex challenges across Deep Learning, NLP, and Computer Vision.
+                    </p>
+                    <p>
+                        My journey has been defined by a consistent pursuit of excellence, reflected in my 9.22/10 CGPA. For me, this academic rigor is not just theoretical; I strive to apply it actively in practical, real-world scenarios. This is best seen in my recent internship and a portfolio of sophisticated projects where I've aimed to push the boundaries of modern AI applications.
+                    </p>
+                </article>
+
+                <div class="separator"></div>
+                
+                <section>
+                    <h3 class="sub-headline">An Inside Look: My Internship at Nuevera Infotech</h3>
+                    <article>
+                        <p>
+                            During a pivotal internship at Nuevera Infotech from February to June 2024, I had the privilege of serving as an Associate AI Intern. I was instrumental in exploring and deploying AI models using tools like Ollama and LM Studio, which directly contributed to enhancing the company's recommendation systems. I made adept use of Git for version control to streamline our team's collaboration. A key highlight for me was the iterative development of core model components, where I skillfully integrated weekly feedback from my senior mentors to refine and perfect our AI solutions.
+                        </p>
+                    </article>
+                </section>
+                
+                <div class="separator"></div>
+
+                <section>
+                    <h3 class="sub-headline">From My Workshop: A Showcase of Projects</h3>
+                    <article>
+                        <h4 class="project-title">The Quest for Accuracy: RAG-Based File Reader</h4>
+                        <p>
+                            Currently, I am spearheading a personal project to develop a file reader powered by Retrieval-Augmented Generation (RAG). I designed the system to intelligently extract and query information from various document types, like PDFs and DOCX files. By implementing a robust LangChain pipeline, my goal for this project is to significantly reduce AI hallucinations and set a new standard for data retrieval accuracy.
+                        </p>
+                    </article>
+                    <article>
+                        <h4 class="project-title"><a href="https://github.com/MuzammilGanihar1507/Vocalizer" target="_blank">Vocalizer: Redefining Audio Manipulation</a></h4>
+                        <p>
+                           In early 2025, I developed "Vocalizer," a versatile audio tool using Python and Streamlit. This application empowers users with features like AI-driven vocal separation, YouTube audio downloading, and loudness normalization. I engineered the project with a modular architecture and meticulous error handling to ensure its stability and future scalability.
+                        </p>
+                    </article>
+                    <article>
+                        <h4 class="project-title"><a href="https://app.roboflow.com/alzheimerdetectionmuzammil-ganihar/alzheimer_detection/models" target="_blank">AI for Health: Alzheimer's Classification Model</a></h4>
+                        <p>
+                           In a significant contribution to medical technology, I worked on a model for Alzheimer's disease classification using YOLOv8. During this project in late 2024, I utilized the Roboflow platform to fine-tune the model's performance, which showcased my ability to apply advanced computer vision techniques to critical healthcare challenges.
+                        </p>
+                    </article>
+                </section>
+            </div>
+            <aside class="sidebar">
+                <div class="sidebar-section contact-info">
+                    <h3 class="sidebar-title">Contact &amp; Profiles</h3>
+                    <p><strong>Syed Mohammad Muzammil Ganihar</strong></p>
+                    <p><strong>Phone:</strong> <a href="tel:+918971455159">+91 89714 55159</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:smmganihar@gmail.com">smmganihar@gmail.com</a></p>
+                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/syed-mohammad-muzammil-ganihar/" target="_blank">linkedin.com/in/syed-mohammad-muzammil-ganihar</a></p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/MuzammilGanihar1507" target="_blank">github.com/MuzammilGanihar1507</a></p>
+                </div>
+                <div class="sidebar-section education-info">
+                     <h3 class="sidebar-title">Academic Record</h3>
+                     <p><strong>B.E., Artificial Intelligence & ML</strong><br>
+                     Global Academy of Technology, Bangalore<br>
+                     <i>CGPA: 9.22/10 (2021 – 2025)</i></p>
+                     <p><strong>Higher Secondary Education (12th)</strong><br>
+                     Govt PU College, Gadag — <i>85.33%</i></p>
+                     <p><strong>High School Education (10th)</strong><br>
+                     Loyola Convent School, Gadag — <i>90.40%</i></p>
+                </div>
+                <div class="sidebar-section skills-list">
+                    <h3 class="sidebar-title">My Technologist's Toolkit</h3>
+                    <strong>Core Competencies</strong>
+                    <p>Machine Learning, Deep Learning, NLP, Computer Vision, LLMs</p>
+                    <strong>Languages</strong>
+                    <p>Python (Proficient), C</p>
+                    <strong>Libraries & Frameworks</strong>
+                    <p>FastAPI, PyTorch, Scikit-Learn, Pandas, NumPy, spaCy, Matplotlib, OpenCV, LangChain, MLflow, Streamlit</p>
+                    <strong>Developer Tools</strong>
+                    <p>Git, VS Code, PyCharm, Jupyter, Ollama, LM Studio</p>
+                    <strong>Databases</strong>
+                    <p>PostgreSQL, MongoDB</p>
+                </div>
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">My Ongoing Development</h3>
+                    <p><strong>LangChain: Chat with Your Data</strong><br>
+                    <i>DeepLearning.AI (Present)</i><br>
+                    I am currently enrolled in an advanced course focusing on Retrieval Augmented Generation (RAG) to build next-generation LLM applications.
+                    </p>
+                </div>
+            </aside>
+        </div>
+        <footer class="page-footer">
+            <p>This digital publication was designed and generated with Gemini.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const buttons = {
+                light: document.getElementById('light-mode'),
+                dark: document.getElementById('dark-mode'),
+                night: document.getElementById('night-mode'),
+            };
+
+            // Function to apply a theme
+            const applyTheme = (theme) => {
+                // Remove all theme classes
+                body.classList.remove('dark-mode', 'night-mode');
+                
+                // Remove active class from all buttons
+                Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    buttons.dark.classList.add('active');
+                } else if (theme === 'night') {
+                    body.classList.add('night-mode');
+                    buttons.night.classList.add('active');
+                } else {
+                    // Default to light mode
+                    buttons.light.classList.add('active');
+                }
+            };
+
+            // Event listeners for theme buttons
+            buttons.light.addEventListener('click', () => {
+                localStorage.setItem('theme', 'light');
+                applyTheme('light');
+            });
+
+            buttons.dark.addEventListener('click', () => {
+                localStorage.setItem('theme', 'dark');
+                applyTheme('dark');
+            });
+
+            buttons.night.addEventListener('click', () => {
+                localStorage.setItem('theme', 'night');
+                applyTheme('night');
+            });
+
+            // On page load, check for saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else {
+                applyTheme('light'); // Default theme
+            }
+        });
+    </script>
+</body>
+</html>
+
